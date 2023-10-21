@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <string name="NewsApp_Logo">NewsApp Logo</string>
+    <!-- Strings de Login -->
+    <string name="Login_UserInput_Txt">E-Mail</string>
+    <string name="Login_PasswordInput_Txt">Contraseña</string>
+    <string name="Login_Button">Entrar</string>
+    <string name="Login_RegisterHere">¿No tienes Cuenta? Registrate Aqui</string>
+
+    <!-- Strings de RegisterUser -->
+    <string name="RegisterUser_NameInput_Title">Nombre(s)</string>
+    <string name="RegisterUser_LastNameInput_Title">Apellido(s)</string>
+    <string name="RegisterUser_EmailInput_Title">E-Mail</string>
+    <string name="RegisterUser_PasswordInput_Title">Contraseña</string>
+    <string name="RegisterUser_PasswordConfirmInput_Title">Repita la Contraseña</string>
+    <string name="RegisterUser_RegisterBtn_Text">Registrarse</string>
+    <string name="RegisterUser_BackToLogin_Text">¿Ya tienes cuenta? Haz Login Aqui</string>
+    <string name="crear_publicacion">Crear Publicacion</string>
+    <string name="cargar_imagen">Cargar Imagen</string>
+    <string name="crea_tu_cuenta">Crea tu cuenta</string>
+    <string name="tu_perfil">Tu Perfil</string>
+    <string name="volver_atras"><![CDATA[<-]]></string>
+
+    <string name="sample_news_title">Club Tigres tiene el mayor numero de patrocinadores en la LigaMX</string>
+    <string name="sample_news_date">18/10/2023</string>
+    <string name="sample_news_body">Club Tigres se asocia con Chirey Motor México como su nuevo patrocinador oficial, siendo así el equipo con mayor número de patrocinadores en la Liga MX. Esta alianza estratégica une al club más exitoso en los últimos años con una firma automotriz que ha logrado rápidamente posicionarse en el segmento de camionetas en México.\n\nEl logotipo de Chirey Motor México estará presente en la manga derecha del jersey del equipo varonil, como se pudo observar durante la primera jornada del Apertura 2023, donde Tigres empató 1–1 frente a Puebla en el Estadio Universitario.\n\nChirey es una empresa automotriz de origen chino, filial de Chery International, y ha estado presente en México desde el año 2022.\n\nTigres, el actual campeón de la Liga y cuatro veces campeón de campeones, suma así a su primer socio comercial número 32, consolidando su presencia y abriendo espacios para marcas de diferentes sectores y nacionalidades. Esta asociación refuerza la posición de Tigres como un club atractivo para empresas que buscan alinearse con el éxito deportivo y la pasión de su afición.</string>
+
+    <string name="sample_news_comment">Me parece increible todo esto.</string>
+    <string name="escribe_un_comentario">Escribe un comentario</string>
+</resources>
