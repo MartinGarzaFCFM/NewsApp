@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="usuario"
+            type="com.fcfm.newsapp.network.Usuario" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="8dp"
+        android:layout_marginVertical="4dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@{usuario.username}"
+            android:layout_weight="1"
+            tools:text="Username"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@{usuario.email}"
+            android:layout_weight="1"
+            tools:text="email"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Abrir"/>
+    </LinearLayout>
+
+
+    <!--
+    <ImageView
+        android:id="@+id/mars_image"
+        android:layout_width="wrap_content"
+        android:layout_height="170dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:padding="2dp"
+        app:imageUrl="@{user.imgSrcUrl}"
+        tools:src="@tools:sample/backgrounds/scenic"/>
+     -->
+</layout>
