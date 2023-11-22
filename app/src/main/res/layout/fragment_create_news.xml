@@ -4,35 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="50dp"
     tools:context=".CreateNewsFragment">
         <EditText
             android:id="@+id/titleInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:hint="Titulo"/>
         <EditText
             android:id="@+id/subtitleInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:hint="Subtitulo"/>
         <EditText
             android:id="@+id/categoryInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:hint="Categoria"/>
         <EditText
             android:id="@+id/bodyInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:hint="Cuerpo de la noticia"/>
         <EditText
             android:id="@+id/imageInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:hint="Imagen"/>
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/registerButton" />
 
         <!--text view for displaying our API response-->
         <TextView

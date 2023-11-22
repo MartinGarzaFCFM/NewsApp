@@ -6,20 +6,28 @@
     android:orientation="vertical"
     tools:context=".LoginFragment"
     android:padding="50dp">
+
     <EditText
-        android:id="@+id/emailInput"
+        android:id="@+id/usernameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Email"/>
+        android:hint="Usuario"
+        android:inputType="textEmailAddress" />
     <EditText
         android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"/>
     <Button
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Entrar"/>
+    <TextView
+        android:id="@+id/avisoLogIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        tools:text="Aviso de un Login"/>
 
 </LinearLayout>

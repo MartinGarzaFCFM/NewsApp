@@ -1,6 +1,7 @@
 package com.fcfm.newsapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,6 @@ class RegisterFragment : Fragment() {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         binding.registerButton.setOnClickListener {
-            Toast.makeText(context, "Logout!", Toast.LENGTH_SHORT).show()
             crearUsuario()
         }
 
@@ -34,22 +34,38 @@ class RegisterFragment : Fragment() {
     }
 
     private fun crearUsuario(){
-        val nuevoUsuario = NewUsuario("martin2", "garza2", "email2@gmail.com", "martin2", "martin2", arrayOf("usuario"))
+
+        val nuevoUsuario = NewUsuario(
+            "${binding.nameInput.text}",
+            "${binding.lastNameInput.text}",
+            "${binding.emailInput.text}",
+            "${binding.passwordInput.text}",
+            "${binding.usernameInput.text}",
+            arrayOf("Usuario"))
+
+        Log.e("USUARIONUEVO", nuevoUsuario.toString())
 
         val call: Call<NewUsuario?>? = NewsAppApi.retrofitService.createUser(nuevoUsuario)
 
         call!!.enqueue(object: Callback<NewUsuario?>{
             override fun onResponse(call: Call<NewUsuario?>, response: Response<NewUsuario?>) {
-                Toast.makeText(context, "DATA Added", Toast.LENGTH_SHORT).show()
-
-                val response: NewUsuario? = response.body()
-
-                val responseString = "Response Code : " + "201" + "\n" + "Name : " +  "Job : "
+                Toast.makeText(context, "Usuario Agregado", Toast.LENGTH_SHORT).show()
             }
 
             override fun onFailure(call: Call<NewUsuario?>, t: Throwable) {
-                Toast.makeText(context, "FALLE", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Fallo el registro", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun arePasswordsTheSame(): Boolean{
+        val password = binding.passwordInput.text
+        val confirmPassword = binding.confirmPasswordInput.text
+        Log.e("PASSWORD", "$password")
+        Log.e("CONFIRMPASSWORD", "$confirmPassword")
+
+        Log.e("contrase;as BOOL", "${password.equals(confirmPassword)}")
+
+        return password.equals(confirmPassword)
     }
 }

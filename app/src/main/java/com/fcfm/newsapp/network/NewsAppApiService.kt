@@ -26,6 +26,13 @@ interface NewsAppApiService{
 
     @POST("users")
     fun createUser(@Body usuario: NewUsuario): Call<NewUsuario?>?
+
+    @POST("auth")
+    fun login(@Body usuario: UsuarioForLogin): Call<Usuario?>?
+
+
+    @POST("noticias")
+    fun createNoticia(@Body noticia: Noticia) : Call<String>
 }
 
 object NewsAppApi{
