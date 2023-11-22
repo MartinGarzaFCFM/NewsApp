@@ -44,6 +44,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var settingsDataStore: SettingsDataStore
 
+    companion object{
+        var userProfile: UserProfile? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,6 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lifecycleScope.launch(Dispatchers.IO) {
             getUserProfile().collect(){
                 withContext(Dispatchers.Main){
+                    userProfile = it
                     displayLoggedEmail.text = it.email
                     displayLoggedUsername.text = it.username
                 }
@@ -91,7 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> navController.navigateUp()
             R.id.nav_settings -> {
                 navController.navigateUp()
-                navController.navigate(R.id.action_homeFragment_to_settingsFragment)
+                navController.navigate(R.id.action_homeFragment_to_userProfileFragment)
             }
 
             R.id.nav_share -> {
@@ -147,6 +152,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             preferences[stringPreferencesKey("user_lastnames")].orEmpty(),
             preferences[stringPreferencesKey("user_email")].orEmpty(),
             preferences[stringPreferencesKey("user_username")].orEmpty(),
+            preferences[stringPreferencesKey("user_image")].orEmpty(),
             preferences[stringPreferencesKey("user_role")].orEmpty()
         )
     }

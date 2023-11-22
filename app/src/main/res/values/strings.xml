@@ -12,5 +12,14 @@
     <string name="confirmPasswordInput">Confirma Contraseña</string>
     <string name="usernameInput">Nombre de Usuario</string>
     <string name="registerButton">Registrarse</string>
+    <string name="imagen_de_perfil">Imagen de Perfil</string>
+    <string name="nombre_s">Nombre(s)</string>
+    <string name="apellido_s">Apellido(s)</string>
+    <string name="email">Email</string>
+    <string name="usuario">Usuario</string>
+    <string name="nombre_de_usuario">Nombre de Usuario</string>
+    <string name="guardar">Guardar</string>
+    <string name="subir_imagen">Subir Imagen</string>
+    <string name="perfil">Perfil</string>
 
 </resources>

@@ -7,7 +7,8 @@ data class Usuario(
     val email: String,
     val password: String,
     val username: String,
-    val roles: Array<String>,
+    val image: String,
+    val role: String,
     val createdAt: String,
     val updatedAt: String,
     val __v: Int,
@@ -19,7 +20,8 @@ data class NewUsuario(
     val email: String,
     val password: String,
     val username: String,
-    val roles: Array<String>
+    val image: String,
+    val role: String
 )
 
 data class UserProfile(
@@ -29,7 +31,8 @@ data class UserProfile(
     val lastNames: String,
     val email: String,
     val username: String,
-    val roles: String
+    val image: String,
+    val role: String
 )
 
 data class UsuarioForLogin(
