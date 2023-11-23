@@ -75,6 +75,18 @@
         android:hint="@string/nombre_de_usuario"
         android:inputType="text" />
 
+    <TextView
+        android:id="@+id/tv_Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contrase_a" />
+    <EditText
+        android:id="@+id/usernamePasswordInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="@string/contrase_a"
+        android:inputType="textPassword" />
+
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"

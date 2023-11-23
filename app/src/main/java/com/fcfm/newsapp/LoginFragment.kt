@@ -77,6 +77,7 @@ class LoginFragment : Fragment() {
                             response.lastNames,
                             response.email,
                             response.username,
+                            response.password,
                             response.image,
                             response.role,
                             requireContext()

@@ -5,7 +5,6 @@ data class Noticia(
     val subtitle: String,
     val category: String,
     val body: String,
-    val image: String,
     val author: String,
     val approved: Boolean
 )

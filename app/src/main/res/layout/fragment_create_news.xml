@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Subtitulo"/>
-        <EditText
+        <Spinner
             android:id="@+id/categoryInput"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="Categoria"/>
+
         <EditText
             android:id="@+id/bodyInput"
             android:layout_width="match_parent"
@@ -29,16 +30,22 @@
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:hint="Cuerpo de la noticia"/>
-        <EditText
-            android:id="@+id/imageInput"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="Imagen"/>
-        <Button
-            android:id="@+id/registerButton"
+        <TextView
+            android:id="@+id/tv_uploadedImages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/registerButton" />
+            tools:text="Imagenes subidas"/>
+        <Button
+            android:id="@+id/uploadButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subir Imagenes" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/guardar" />
 
         <!--text view for displaying our API response-->
         <TextView

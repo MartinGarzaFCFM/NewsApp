@@ -26,6 +26,7 @@ class SettingsDataStore(context: Context) {
     private val USER_LASTNAMES = stringPreferencesKey("user_lastnames")
     private val USER_EMAIL = stringPreferencesKey("user_email")
     private val USER_USERNAME = stringPreferencesKey("user_username")
+    private val USER_PASSWORD = stringPreferencesKey("user_password")
     private val USER_IMAGE = stringPreferencesKey("user_image")
     private val USER_ROLE = stringPreferencesKey("user_role")
 
@@ -50,6 +51,7 @@ class SettingsDataStore(context: Context) {
         lastNames: String,
         email: String,
         username: String,
+        password: String,
         image: String,
         role: String,
         context: Context
@@ -61,6 +63,7 @@ class SettingsDataStore(context: Context) {
             preferences[USER_LASTNAMES] = lastNames
             preferences[USER_EMAIL] = email
             preferences[USER_USERNAME] = username
+            preferences[USER_PASSWORD] = password
             preferences[USER_IMAGE] = image
             preferences[USER_ROLE] = role
         }
@@ -74,6 +77,7 @@ class SettingsDataStore(context: Context) {
             it.remove(USER_LASTNAMES)
             it.remove(USER_EMAIL)
             it.remove(USER_USERNAME)
+            it.remove(USER_PASSWORD)
             it.remove(USER_IMAGE)
             it.remove(USER_ROLE)
         }

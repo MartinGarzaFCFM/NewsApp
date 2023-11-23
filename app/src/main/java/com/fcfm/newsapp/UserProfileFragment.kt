@@ -14,9 +14,17 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.fcfm.newsapp.MainActivity.Companion.userProfile
 import com.fcfm.newsapp.data.SettingsDataStore
 import com.fcfm.newsapp.databinding.FragmentUserProfileBinding
+import com.fcfm.newsapp.network.NewsAppApi
+import com.fcfm.newsapp.network.UpdateUsuario
+import com.fcfm.newsapp.network.Usuario
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 
 
@@ -27,7 +35,7 @@ class UserProfileFragment : Fragment() {
     private var _binding: FragmentUserProfileBinding? = null
     private val binding get() = _binding!!
 
-    private var sImage: String? = ""
+    private var sImage: String? = userProfile?.image.toString()
 
 
 
@@ -57,6 +65,9 @@ class UserProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //Inicializar LoggedInDataStore
+        settingsDataStore = SettingsDataStore(requireContext())
+
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
 
         binding.uploadImageButton.setOnClickListener {
@@ -67,16 +78,79 @@ class UserProfileFragment : Fragment() {
             saveUser()
         }
 
+        //Cargar Datos a la pantalla de el usuario Logeado
         val decodedString: ByteArray = Base64.decode(userProfile?.image.toString(), Base64.DEFAULT)
         val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
         binding.ivProfilePic.setImageBitmap(decodedByte)
 
+        loadDataOnScreen()
+
         return binding.root
+    }
+
+    private fun loadDataOnScreen() {
+        var cs: CharSequence = userProfile?.names.toString()
+        binding.namesInput.setText(cs)
+        cs = userProfile?.lastNames.toString()
+        binding.lastnamesInput.setText(cs)
+        cs = userProfile?.email.toString()
+        binding.emailInput.setText(cs)
+        cs = userProfile?.username.toString()
+        binding.usernameInput.setText(cs)
     }
 
     private fun saveUser() {
         //Get ID
         Log.d("userProfile COMPANION", userProfile.toString())
+
+        val user = UpdateUsuario(
+            userProfile?.ID.toString(),
+            "${binding.namesInput.text}",
+            "${binding.lastnamesInput.text}",
+            "${binding.emailInput.text}",
+            "${binding.usernameInput.text}",
+            "${binding.usernamePasswordInput.text}",
+            sImage.toString()
+        )
+
+        Log.e("USUARIONUEVO", user.toString())
+
+        val call: Call<Usuario?>? = NewsAppApi.retrofitService.updateUser(user)
+
+        call!!.enqueue(object: Callback<Usuario?> {
+            override fun onResponse(call: Call<Usuario?>, response: Response<Usuario?>) {
+                Toast.makeText(context, "Usuario Actualizado", Toast.LENGTH_SHORT).show()
+
+                Log.e("RESPONSEFROM API", response.body().toString())
+
+                val response: Usuario? = response.body()
+
+                lifecycleScope.launch {
+                    if (response != null) {
+                        Log.d("LOGIN", "${response.username}")
+                        settingsDataStore.saveUserToPreferencesStore(
+                            true,
+                            response._id,
+                            response.names,
+                            response.lastNames,
+                            response.email,
+                            response.username,
+                            response.password,
+                            response.image,
+                            response.role,
+                            requireContext()
+                        )
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<Usuario?>, t: Throwable) {
+                Toast.makeText(context, "Fallo el registro", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
     }
 
     private fun chooseImage(){

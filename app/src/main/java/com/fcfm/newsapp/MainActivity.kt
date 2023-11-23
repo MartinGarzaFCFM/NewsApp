@@ -1,8 +1,6 @@
 package com.fcfm.newsapp
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -10,30 +8,19 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.fcfm.newsapp.data.SettingsDataStore
 import com.fcfm.newsapp.data.dataStore
-import com.fcfm.newsapp.databinding.ActivityMainBinding
-import com.fcfm.newsapp.databinding.FragmentLoginBinding
 import com.fcfm.newsapp.network.UserProfile
-import com.fcfm.newsapp.network.Usuario
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -152,6 +139,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             preferences[stringPreferencesKey("user_lastnames")].orEmpty(),
             preferences[stringPreferencesKey("user_email")].orEmpty(),
             preferences[stringPreferencesKey("user_username")].orEmpty(),
+            preferences[stringPreferencesKey("user_password")].orEmpty(),
             preferences[stringPreferencesKey("user_image")].orEmpty(),
             preferences[stringPreferencesKey("user_role")].orEmpty()
         )
