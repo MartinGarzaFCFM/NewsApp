@@ -1,5 +1,5 @@
 package com.fcfm.newsapp.network
 
-data class Response(
+data class ApiResponse(
     val message: String
 )
