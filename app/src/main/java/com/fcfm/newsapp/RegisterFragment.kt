@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.fcfm.newsapp.MainActivity.Companion.userProfile
 import com.fcfm.newsapp.databinding.FragmentRegisterBinding
 import com.fcfm.newsapp.network.NewUsuario
 import com.fcfm.newsapp.network.NewsAppApi
@@ -57,8 +59,17 @@ class RegisterFragment : Fragment() {
     ): View? {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
+        if(userProfile?.loggedIn == true){
+            if(userProfile?.role == "Admin"){
+                //Hacer aparecer la seleccion de roles
+            }
+        }
+
         binding.registerButton.setOnClickListener {
-            crearUsuario()
+            if(crearUsuario()){
+                this.findNavController().popBackStack()
+            }
+
         }
 
         binding.uploadImageButton.setOnClickListener {
@@ -69,7 +80,34 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
-    private fun crearUsuario(){
+    private fun crearUsuario(): Boolean{
+
+        if(binding.nameInput.text.toString().isEmpty() ||
+            binding.lastNameInput.text.toString().isEmpty() ||
+            binding.usernameInput.text.toString().isEmpty()){
+            Toast.makeText(context, "Revisa que esten los campos llenos", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (isValidPassword(binding.passwordInput.text.toString())){
+            Toast.makeText(context, "Contraseña no valida", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if(!arePasswordsTheSame()){
+            Toast.makeText(context, "Contraseñas no son iguales", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if(!isEmailValid()){
+            Toast.makeText(context, "email no es valido", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+
+        if (sImage.isNullOrEmpty()){
+            Toast.makeText(context, "Coloca una imagen", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
         val nuevoUsuario = NewUsuario(
             "${binding.nameInput.text}",
@@ -78,7 +116,7 @@ class RegisterFragment : Fragment() {
             "${binding.passwordInput.text}",
             "${binding.usernameInput.text}",
             "$sImage",
-            "Usuario"
+            "Reportero"
         )
 
         Log.e("USUARIONUEVO", nuevoUsuario.toString())
@@ -87,24 +125,41 @@ class RegisterFragment : Fragment() {
 
         call!!.enqueue(object: Callback<NewUsuario?>{
             override fun onResponse(call: Call<NewUsuario?>, response: Response<NewUsuario?>) {
-                Toast.makeText(context, "Usuario Agregado", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }
 
             override fun onFailure(call: Call<NewUsuario?>, t: Throwable) {
-                Toast.makeText(context, "Fallo el registro", Toast.LENGTH_SHORT).show()
+                Log.e("ERRORREGISTRO", t.message.toString())
             }
         })
+        return true
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        if (password.length < 8) return false
+        if (password.filter { it.isDigit() }.firstOrNull() == null) return false
+        if (password.filter { it.isLetter() }.filter { it.isUpperCase() }.firstOrNull() == null) return false
+        if (password.filter { it.isLetter() }.filter { it.isLowerCase() }.firstOrNull() == null) return false
+        if (password.filter { !it.isLetterOrDigit() }.firstOrNull() == null) return false
+
+        return true
+    }
+
+    private fun isEmailValid(): Boolean {
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
+
+        return binding.emailInput.text.toString().matches(emailRegex.toRegex())
     }
 
     private fun arePasswordsTheSame(): Boolean{
-        val password = binding.passwordInput.text
-        val confirmPassword = binding.confirmPasswordInput.text
-        Log.e("PASSWORD", "$password")
-        Log.e("CONFIRMPASSWORD", "$confirmPassword")
+        val password = binding.passwordInput.text.toString()
+        val confirmPassword = binding.confirmPasswordInput.text.toString()
+        Log.e("PASSWORD", password)
+        Log.e("CONFIRMPASSWORD", confirmPassword)
 
-        Log.e("contrase;as BOOL", "${password.equals(confirmPassword)}")
+        Log.e("contrase;as BOOL", "${password == confirmPassword}")
 
-        return password.equals(confirmPassword)
+        return password == confirmPassword
     }
 
     private fun chooseImage(){

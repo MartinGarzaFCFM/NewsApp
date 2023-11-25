@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:clipToPadding="false"
             app:spanCount="2"
-
+            app:listData="@{viewModel.users}"
             tools:itemCount="6"
             tools:listitem="@layout/user_view_item"/>
         <!--app:listData="@{viewModel.users}" -->

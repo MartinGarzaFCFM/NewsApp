@@ -15,6 +15,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.fcfm.newsapp.MainActivity.Companion.userProfile
 import com.fcfm.newsapp.data.SettingsDataStore
 import com.fcfm.newsapp.databinding.FragmentUserProfileBinding
@@ -29,6 +31,9 @@ import java.io.ByteArrayOutputStream
 
 
 class UserProfileFragment : Fragment() {
+    lateinit var usuario: Usuario
+    private val navigationArgs: UserProfileFragmentArgs by navArgs()
+
     private lateinit var settingsDataStore: SettingsDataStore
     private var isUserLoggedIn = false
 
@@ -36,7 +41,6 @@ class UserProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var sImage: String? = userProfile?.image.toString()
-
 
 
     private val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
@@ -60,32 +64,104 @@ class UserProfileFragment : Fragment() {
         }
     }
 
+    private fun bind(usuario: Usuario){
+        binding.apply {
+            var cs: CharSequence = usuario.names
+            namesInput.setText(cs)
+            cs = usuario.lastNames
+            lastnamesInput.setText(cs)
+            cs = usuario.email
+            emailInput.setText(cs)
+            cs = usuario.username
+            usernameInput.setText(cs)
+//
+            usernamePasswordInput.isEnabled = false
+            uploadImageButton.isEnabled = false
+            cs = "Eliminar"
+            saveButton.setText(cs)
+            saveButton.setOnClickListener {
+                eliminarUsuario(usuario._id)
+            }
+
+            val decodedString: ByteArray = Base64.decode(usuario.image, Base64.DEFAULT)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            binding.ivProfilePic.setImageBitmap(decodedByte)
+        }
+    }
+
+    private fun eliminarUsuario(id: String) {
+        val call: Call<Usuario?>? = NewsAppApi.retrofitService.borrarUsuario(id)
+
+        call!!.enqueue(object: Callback<Usuario?> {
+            override fun onResponse(call: Call<Usuario?>, response: Response<Usuario?>) {
+                //Toast.makeText(context, "Usuario Eliminado", Toast.LENGTH_SHORT).show()
+
+                Log.e("RESPONSEFROM API", response.body().toString())
+
+                val response: Usuario? = response.body()
+
+            }
+
+            override fun onFailure(call: Call<Usuario?>, t: Throwable) {
+                Log.e("RESPONSEFROM API", t.message.toString())
+            }
+        })
+
+        this.findNavController().popBackStack()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         //Inicializar LoggedInDataStore
         settingsDataStore = SettingsDataStore(requireContext())
 
         _binding = FragmentUserProfileBinding.inflate(inflater, container, false)
 
-        binding.uploadImageButton.setOnClickListener {
-            chooseImage()
-        }
-
-        binding.saveButton.setOnClickListener {
-            saveUser()
-        }
-
-        //Cargar Datos a la pantalla de el usuario Logeado
-        val decodedString: ByteArray = Base64.decode(userProfile?.image.toString(), Base64.DEFAULT)
-        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-        binding.ivProfilePic.setImageBitmap(decodedByte)
-
-        loadDataOnScreen()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val id = navigationArgs.userId
+        if(id != ""){
+            val usuario: Call<Usuario> = NewsAppApi.retrofitService.getUsuario(id)
+            usuario!!.enqueue(object: Callback<Usuario?> {
+                override fun onResponse(call: Call<Usuario?>, response: Response<Usuario?>) {
+                    if(response.body() != null){
+
+                        bind(response.body()!!)
+                    }
+                }
+
+                override fun onFailure(call: Call<Usuario?>, t: Throwable) {
+                    Log.e("CALL", "fallo el CALL")
+                }
+
+            })
+        }
+        else{
+            binding.uploadImageButton.setOnClickListener {
+                chooseImage()
+            }
+
+            binding.saveButton.setOnClickListener {
+                saveUser()
+            }
+
+            Log.e("FRG", userProfile?.image.toString())
+
+            //Cargar Datos a la pantalla de el usuario Logeado
+            val decodedString: ByteArray = Base64.decode(userProfile?.image.toString(), Base64.DEFAULT)
+            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+            binding.ivProfilePic.setImageBitmap(decodedByte)
+
+            loadDataOnScreen()
+        }
     }
 
     private fun loadDataOnScreen() {
@@ -157,5 +233,10 @@ class UserProfileFragment : Fragment() {
         val myFileIntent = Intent(Intent.ACTION_GET_CONTENT)
         myFileIntent.setType("image/*")
         activityResultLauncher.launch(myFileIntent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

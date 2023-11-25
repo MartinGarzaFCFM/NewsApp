@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fcfm.newsapp.databinding.UserViewItemBinding
 import com.fcfm.newsapp.network.Usuario
 
-class UserListAdapter : ListAdapter<Usuario,
-        UserListAdapter.UserViewHolder>(DiffCallback) {
+class UserListAdapter(private val onItemClicked: (Usuario) -> Unit) :
+    ListAdapter<Usuario, UserListAdapter.UserViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,6 +20,9 @@ class UserListAdapter : ListAdapter<Usuario,
 
     override fun onBindViewHolder(holder: UserListAdapter.UserViewHolder, position: Int) {
         val usuario = getItem(position)
+        holder.itemView.setOnClickListener {
+            onItemClicked(usuario)
+        }
         holder.bind(usuario)
     }
 

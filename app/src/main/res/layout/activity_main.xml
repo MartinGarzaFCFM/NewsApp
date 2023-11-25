@@ -19,9 +19,9 @@
             android:layout_height="56dp"
             android:id="@+id/toolbar"
             android:elevation="4dp"
-            android:background="@color/lavender"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:background="#00000000"
+            app:titleTextColor="@color/NewsApp_AmericanBronze"
+            android:theme="@style/Base.Theme.NewsApp"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -44,10 +44,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/menubkg"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/lavender"
-        app:itemTextColor="@color/lavender"
+        app:itemIconTint="@color/NewsApp_AmericanBronze"
+        app:itemTextColor="@color/NewsApp_AmericanBronze"
         app:menu="@menu/nav_menu"
         tools:visibility="gone"/>
 

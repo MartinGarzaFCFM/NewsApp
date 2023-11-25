@@ -6,26 +6,38 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fcfm.newsapp.adapter.UserListAdapter
 import com.fcfm.newsapp.databinding.FragmentUsersBinding
 import com.fcfm.newsapp.viewModel.UserViewModel
 
 class UsersFragment : Fragment() {
+    private var _binding: FragmentUsersBinding? = null
+    private val binding get() = _binding!!
+
+
     private val viewModel: UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentUsersBinding.inflate(inflater)
-        //val binding = UserViewItemBinding.inflate(inflater)
-
-        binding.lifecycleOwner = this
-
-        binding.viewModel = viewModel
-
-        binding.usersGrid.adapter = UserListAdapter()
-
+        _binding = FragmentUsersBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val adapter = UserListAdapter {
+            val action = UsersFragmentDirections.actionUsersFragmentToUserProfileFragment(it._id)
+            this.findNavController().navigate(action)
+        }
+
+        binding.usersGrid.adapter = adapter
+        viewModel.users.observe(this.viewLifecycleOwner) {
+            it.let {
+                adapter.submitList(it)
+            }
+        }
     }
 }

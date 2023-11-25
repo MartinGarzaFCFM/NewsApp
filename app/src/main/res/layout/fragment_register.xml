@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:autofillHints="Contraseña"
+        android:inputType="textPassword"
         android:hint="@string/passwordInput" />
 
     <EditText
@@ -62,6 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:autofillHints="Confirma Contraseña"
+        android:inputType="textPassword"
         android:hint="@string/confirmPasswordInput" />
 
     <EditText

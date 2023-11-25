@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.fcfm.newsapp.data.SettingsDataStore
 import com.fcfm.newsapp.databinding.FragmentLoginBinding
 import com.fcfm.newsapp.network.NewsAppApi
@@ -84,6 +85,12 @@ class LoginFragment : Fragment() {
                         )
                     }
                 }
+
+
+
+                val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+
+                findNavController().navigate(action)
             }
 
             override fun onFailure(call: Call<Usuario?>, t: Throwable) {

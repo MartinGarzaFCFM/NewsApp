@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    id("kotlin-android")
+    id ("androidx.navigation.safeargs.kotlin")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
 }
@@ -77,4 +79,9 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+
+    //Room
+    implementation("androidx.room:room-runtime:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
 }

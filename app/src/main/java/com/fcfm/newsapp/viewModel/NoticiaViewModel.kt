@@ -5,34 +5,30 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fcfm.newsapp.network.NewsAppApi
-import com.fcfm.newsapp.network.Usuario
+import com.fcfm.newsapp.network.NoticiaFromAPI
 import kotlinx.coroutines.launch
 
-enum class ApiStatus { LOADING, ERROR, DONE }
-
-class UserViewModel: ViewModel() {
+class NoticiaViewModel: ViewModel() {
     private val _status = MutableLiveData<ApiStatus>()
-    private val _users = MutableLiveData<List<Usuario>>()
+    private val _noticias = MutableLiveData<List<NoticiaFromAPI>>()
 
     val status: LiveData<ApiStatus> = _status
-    val users: LiveData<List<Usuario>> = _users
+    val noticias: LiveData<List<NoticiaFromAPI>> = _noticias
 
     init {
-        getUsers()
+        getNoticias()
     }
 
-    private fun getUsers(){
+    private fun getNoticias() {
         viewModelScope.launch {
             ApiStatus.LOADING
             try {
-                _users.value = NewsAppApi.retrofitService.getUsers()
+                _noticias.value = NewsAppApi.retrofitService.getNoticias()
                 _status.value = ApiStatus.DONE
-            } catch (e: Exception) {
+            }catch (e: Exception){
+                _noticias.value = listOf()
                 _status.value = ApiStatus.ERROR
-                _users.value = listOf()
             }
-
         }
     }
-
 }

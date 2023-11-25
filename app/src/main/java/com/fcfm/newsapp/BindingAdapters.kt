@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.fcfm.newsapp.adapter.UserListAdapter
+import com.fcfm.newsapp.data.RoomNoticia
 import com.fcfm.newsapp.network.Usuario
 import com.fcfm.newsapp.viewModel.ApiStatus
 
@@ -26,6 +27,13 @@ fun bindRecyclerView(recyclerView: RecyclerView,
                      data: List<Usuario>?) {
     val adapter = recyclerView.adapter as UserListAdapter
     adapter.submitList(data)
+}
+
+@BindingAdapter("noticiasData")
+fun bindNoticiasRecyclerView(recyclerView: RecyclerView,
+                     data: List<RoomNoticia>?) {
+    //val adapter = recyclerView.adapter as NoticiaListAdapter
+    //adapter.submitList(data)
 }
 
 @BindingAdapter("ApiStatus")

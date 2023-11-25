@@ -8,6 +8,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.fcfm.newsapp.MainActivity.Companion.userProfile
+import com.fcfm.newsapp.network.UserProfile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -66,6 +68,19 @@ class SettingsDataStore(context: Context) {
             preferences[USER_PASSWORD] = password
             preferences[USER_IMAGE] = image
             preferences[USER_ROLE] = role
+
+            userProfile = UserProfile(
+                preferences[booleanPreferencesKey("is_user_logged_in")] ?: false,
+                preferences[stringPreferencesKey("user_id")].orEmpty(),
+                preferences[stringPreferencesKey("user_names")].orEmpty(),
+                preferences[stringPreferencesKey("user_lastnames")].orEmpty(),
+                preferences[stringPreferencesKey("user_email")].orEmpty(),
+                preferences[stringPreferencesKey("user_username")].orEmpty(),
+                preferences[stringPreferencesKey("user_password")].orEmpty(),
+                preferences[stringPreferencesKey("user_image")].orEmpty(),
+                preferences[stringPreferencesKey("user_role")].orEmpty()
+            )
+
         }
     }
 

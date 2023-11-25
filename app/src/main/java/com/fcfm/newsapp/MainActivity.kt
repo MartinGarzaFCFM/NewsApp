@@ -1,8 +1,12 @@
 package com.fcfm.newsapp
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -35,6 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         var userProfile: UserProfile? = null
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,13 +66,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val headerView: View = navigationView.getHeaderView(0)
         val displayLoggedUsername = headerView.findViewById<TextView>(R.id.user_username)
         val displayLoggedEmail = headerView.findViewById<TextView>(R.id.user_email)
+        val displayLoggedPicture = headerView.findViewById<ImageView>(R.id.user_image)
 
         lifecycleScope.launch(Dispatchers.IO) {
             getUserProfile().collect(){
                 withContext(Dispatchers.Main){
                     userProfile = it
+
                     displayLoggedEmail.text = it.email
                     displayLoggedUsername.text = it.username
+                    val decodedString: ByteArray = Base64.decode(it.image, Base64.DEFAULT)
+                    val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                    displayLoggedPicture.setImageBitmap(decodedByte)
+
+                    Log.d("LOGIN", userProfile.toString())
+
                 }
             }
         }
@@ -76,20 +89,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         setupActionBarWithNavController(this, navController)
+
+
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_home -> navController.navigateUp()
+            R.id.nav_home -> {
+                navController.popBackStack()
+            }
+
+
             R.id.nav_settings -> {
                 navController.navigateUp()
                 navController.navigate(R.id.action_homeFragment_to_userProfileFragment)
             }
 
-            R.id.nav_share -> {
-                navController.navigateUp()
-                navController.navigate(R.id.action_homeFragment_to_shareFragment)
-            }
 
             R.id.nav_about -> {
                 navController.navigateUp()
@@ -121,8 +137,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_logout -> {
+                navController.navigateUp()
+
+
                 lifecycleScope.launch {
                     settingsDataStore.clearUserToPreferencesStore(applicationContext)
+
                 }
                 Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show()
             }
@@ -147,6 +167,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onBackPressed() {
+        super.onBackPressed()
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
@@ -157,6 +178,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
-
 }

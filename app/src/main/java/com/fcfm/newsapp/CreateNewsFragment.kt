@@ -16,8 +16,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.fcfm.newsapp.MainActivity.Companion.userProfile
 import com.fcfm.newsapp.data.SettingsDataStore
@@ -27,7 +25,6 @@ import com.fcfm.newsapp.network.ApiResponse
 import com.fcfm.newsapp.network.NewsAppApi
 import com.fcfm.newsapp.network.Noticia
 import com.fcfm.newsapp.network.NoticiaFromAPI
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -192,10 +189,8 @@ class CreateNewsFragment : Fragment() {
                 val res = response.body()
                 if(res != null){
                     Log.e("API IMAGEN", res.message)
-                    lifecycleScope.launch {
-                        findNavController().navigateUp()
-                    }
 
+                    activity?.supportFragmentManager?.popBackStack()
                 }
                 else{
                     binding.idTVResponse.text = "ImagePostFail(162)"
@@ -209,6 +204,7 @@ class CreateNewsFragment : Fragment() {
     }
 
     private fun chooseImage() {
+        listaImagenes = arrayListOf()
         val myFileIntent = Intent(Intent.ACTION_GET_CONTENT)
         myFileIntent.setType("image/*")
         myFileIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
