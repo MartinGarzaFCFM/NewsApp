@@ -4,70 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
     tools:context=".MainActivity">
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/news_categories"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:id="@+id/toolbar"
+            android:elevation="4dp"
+            android:background="#00000000"
+            app:titleTextColor="@color/NewsApp_AmericanBronze"
+            android:theme="@style/Base.Theme.NewsApp"/>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                tools:visibility="visible">
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph"
+                tools:layout="@layout/fragment_home"/>
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Economia"
-                    tools:text="Economia"
-                    tools:visibility="visible" />
+        </FrameLayout>
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Deportes"
-                    tools:visibility="visible" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ciencia y Tecnologia"
-                    tools:visibility="visible" />
-            </com.google.android.material.tabs.TabLayout>
-
-        </RelativeLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvItemList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            tools:visibility="invisible">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:visibility="visible"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer"
-        tools:visibility="visible" />
+        app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/NewsApp_AmericanBronze"
+        app:itemTextColor="@color/NewsApp_AmericanBronze"
+        app:menu="@menu/nav_menu"
+        tools:visibility="gone"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

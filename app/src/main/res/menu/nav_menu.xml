@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/baseline_home_24"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/perfil" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/baseline_info_24"
+            android:title="About Us" />
+
+    </group>
+
+    <group
+        android:id="@+id/nav_reporter_tools"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_create_news"
+            android:icon="@drawable/baseline_newspaper_24"
+            android:title="Crear Noticia" />
+        <item
+            android:id="@+id/nav_see_news"
+            android:icon="@drawable/baseline_view_list_24"
+            android:title="Ver Noticias Publicadas" />
+    </group>
+    <group
+        android:id="@+id/nav_admin_tools"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_see_users"
+            android:icon="@drawable/baseline_contact_mail_24"
+            android:title="Ver Usuarios" />
+    </group>
+    <group android:id="@+id/nav_register_group">
+        <item
+            android:id="@+id/nav_register"
+            android:icon="@drawable/baseline_login_24"
+            android:title="@string/registerButton" />
+    </group>
+
+    <group android:id="@+id/nav_login_group">
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/baseline_login_24"
+            android:title="Login" />
+
+    </group>
+    <group android:id="@+id/nav_logout_group">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/baseline_logout_24"
+            android:title="Logout" />
+
+    </group>
+
+</menu>
